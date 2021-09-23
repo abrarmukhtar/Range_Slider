@@ -13,19 +13,18 @@ export default function ProgressBar(props) {
     let xtraNum2 = 0;
 
     if (Sum > 100) {
-      
       xtraNum = Math.ceil(Math.round((Sum - 100) / 2)); // this return partial value
-      
-      if (Sum % 2 == 1) { // this checks that given value is Odd or Even
+
+      if (Sum % 2 == 1) {
+        // this checks that given value is Odd or Even
         xtraNum2 = xtraNum - 1;
       } else {
         xtraNum2 = xtraNum;
       }
-
     } else {
-
       xtraNum = Math.ceil(Math.round((100 - Sum) / 2)); // this return partial value
-      if (Sum % 2 == 1) {// this checks that given value is Odd or Even
+      if (Sum % 2 == 1) {
+        // this checks that given value is Odd or Even
         xtraNum2 = xtraNum - 1;
       } else {
         xtraNum2 = xtraNum;
@@ -36,12 +35,15 @@ export default function ProgressBar(props) {
     let p2 = 0;
     let p3 = 0;
 
-    //this is code working on Greater than 100
+    //this is code handle if sum greater than or less than 100
     switch (e.target.name) {
       case "l1":
+        p2 = parseInt(props.per2);
+        p3 = parseInt(props.per3);
+
         if (Sum > 100) {
-          p2 = parseInt(props.per2) - parseInt(xtraNum);
-          p3 = parseInt(props.per3) - parseInt(xtraNum2);
+          p2 = p2 - parseInt(xtraNum);
+          p3 = p3 - parseInt(xtraNum2);
 
           if (p3 < 0) {
             p2 = p2 + p3;
@@ -52,26 +54,19 @@ export default function ProgressBar(props) {
             p3 = p3 + p2;
             p2 = 0;
           }
-          props.changeFn2(p2);
-          props.changeFn3(p3);
-          p1 = 0;
-          p2 = 0;
-          p3 = 0;
         } else {
-          p2 = parseInt(props.per2) + parseInt(xtraNum);
-          p3 = parseInt(props.per3) + parseInt(xtraNum2);
-
-          props.changeFn2(p2);
-          props.changeFn3(p3);
-          p1 = 0;
-          p2 = 0;
-          p3 = 0;
+          p2 = p2 + parseInt(xtraNum);
+          p3 = p3 + parseInt(xtraNum2);
         }
+        props.changeFn2(p2);
+        props.changeFn3(p3);
         break;
       case "l2":
+        p1 = parseInt(props.per1);
+        p3 = parseInt(props.per3);
         if (Sum > 100) {
-          p1 = parseInt(props.per1) - parseInt(xtraNum);
-          p3 = parseInt(props.per3) - parseInt(xtraNum2);
+          p1 = p1 - parseInt(xtraNum);
+          p3 = p3 - parseInt(xtraNum2);
 
           if (p3 < 0) {
             p1 = p1 + p3;
@@ -82,27 +77,20 @@ export default function ProgressBar(props) {
             p3 = p3 + p1;
             p1 = 0;
           }
-
-          props.changeFn1(p1);
-          props.changeFn3(p3);
-          p1 = 0;
-          p2 = 0;
-          p3 = 0;
         } else {
-          p1 = parseInt(props.per1) + parseInt(xtraNum);
-          p3 = parseInt(props.per3) + parseInt(xtraNum2);
-
-          props.changeFn1(p1);
-          props.changeFn3(p3);
-          p1 = 0;
-          p2 = 0;
-          p3 = 0;
+          p1 = p1 + parseInt(xtraNum);
+          p3 = p3 + parseInt(xtraNum2);
         }
+        props.changeFn1(p1);
+        props.changeFn3(p3);
+
         break;
       case "l3":
+        p1 = parseInt(props.per1);
+        p2 = parseInt(props.per2);
         if (Sum > 100) {
-          p1 = parseInt(props.per1) - parseInt(xtraNum);
-          p2 = parseInt(props.per2) - parseInt(xtraNum2);
+          p1 = p1 - parseInt(xtraNum);
+          p2 = p2 - parseInt(xtraNum2);
 
           if (p2 < 0) {
             p1 = p1 + p2;
@@ -113,22 +101,13 @@ export default function ProgressBar(props) {
             p2 = p2 + p1;
             p1 = 0;
           }
-
-          props.changeFn1(p1);
-          props.changeFn2(p2);
-          p1 = 0;
-          p2 = 0;
-          p3 = 0;
         } else {
-          p1 = parseInt(props.per1) + parseInt(xtraNum);
-          p2 = parseInt(props.per2) + parseInt(xtraNum2);
-
-          props.changeFn1(p1);
-          props.changeFn2(p2);
-          p1 = 0;
-          p2 = 0;
-          p3 = 0;
+          p1 = p1 + parseInt(xtraNum);
+          p2 = p2 + parseInt(xtraNum2);
         }
+        props.changeFn1(p1);
+        props.changeFn2(p2);
+
         break;
       default:
         console.log("nothing matched");
@@ -153,7 +132,6 @@ export default function ProgressBar(props) {
           name="l2"
           value={props.per2}
           onChange={(e) => props.changeFn2(e.target.value)}
-          // onKeyUp={(e) => props.changeFn2(e.target.value)}
           onAfterChange={comperisons}
           onKeyUp={comperisons}
         />
